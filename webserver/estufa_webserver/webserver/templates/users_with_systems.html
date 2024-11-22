@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .utilizadores-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .utilizadores-table th,
+    .utilizadores-table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .utilizadores-table th {
+        background-color: #004d40;
+        color: white;
+    }
+
+    .utilizadores-table tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .utilizadores-table tbody tr:hover {
+        background-color: #ddd;
+    }
+
+    .utilizadores-table td {
+        font-size: 16px;
+    }
+
+    .btn,
+    .btn-info,
+    .btn-warning {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 5px;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+    }
+
+    .btn-warning {
+        background-color: #004d40;
+        color: rgb(255, 255, 255);
+    }
+
+    .btn:hover {
+        opacity: 0.85;
+        transform: scale(1.05);
+    }
+
+    .btn:active {
+        transform: scale(1.00);
+    }
+</style>
+
+<div class="container">
+    <h2> Utilizadores com Sistemas Associados</h2>
+    <table class="utilizadores-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th>Sistema Associado</th>
+                <th>Ações</th> <!-- Nova coluna para ações -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for utilizador in utilizadores %}
+            <tr>
+                <td>{{ utilizador.id }}</td>
+                <td>{{ utilizador.nome }}</td>
+                <td>{{ utilizador.email }}</td>
+                <td>{{ utilizador.admin|yesno:"Sim,Não" }}</td>
+                <td>
+                    {% for assignment in utilizador.usersystemassignment_set.all %}
+                    {{ assignment.sistema.nome_planta }}
+                    - <a href="{% url 'unassign_system' assignment.id %}" class="btn btn-warning">Desassociar</a>
+                    {% empty %}
+                    Nenhum sistema associado
+                    {% endfor %}
+                </td>
+                <td>
+                    <!-- Link para atribuir sistemas, visível apenas se o utilizador é admin -->
+                    {% if request.user.is_authenticated and request.user.admin %}
+                    <a href="{% url 'assign_system' utilizador.id %}" class="btn btn-info">Atribuir Sistema</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

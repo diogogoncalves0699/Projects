@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <meta charset="UTF-8">
+    <title>Meu Site</title>
+</head>
+
+<body style="background-image: url('/static/images/backgroundimage.png')">
+
+    <header>
+        <div class="logo-title">
+            <img src="{% static 'images/Smart greenhouse Iot (2).png' %}" alt="Smart Greenhouse" id="logo">
+            <p class="title">Smart Greenhouse</p>
+        </div>
+        <nav class="menu">
+            <ul>
+
+                {% if user.is_authenticated %}
+                {% if user.admin %}
+
+                <li><a href="{% url 'utilizadores' %}">Utilizadores</a></li>
+                <li><a href="{% url 'dados' %}">Dados</a></li>
+                {% endif %}
+                <li><a href="{% url 'sistemas' %}">Sistemas</a></li>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit"
+                        style="background:none; border:none; padding:0; color:rgb(252, 252, 252); cursor:pointer">
+                        Logout
+                    </button>
+                </form>
+                {% else %}
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- O conteúdo específico da página será inserido aqui -->
+        {% endblock %}
+    </main>
+</body>
+
+</html>

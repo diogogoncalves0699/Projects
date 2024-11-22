@@ -1,0 +1,207 @@
+/* Ajustes gerais */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100%;
+    /* Garante que o HTML e BODY ocupem toda a altura da tela */
+    background-color: #f4f4f4;
+    /* Cor de fundo */
+    background-image: url('/static/images/backgroundimage.png');
+    /* Caminho para o background */
+    background-size: cover;
+    /* Certifica que o background cubra toda a área visível */
+    background-position: center;
+    /* Centraliza o background na tela */
+}
+
+header {
+    background-color: #004d40;
+    /* Deep teal color */
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-title img {
+    height: 60px;
+    /* Ajuste o tamanho do seu logo */
+    margin-right: 15px;
+}
+
+.logo-title .title {
+    font-size: 2em;
+    margin: 0;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+.menu li {
+    margin: 0 20px;
+}
+
+.menu a,
+.logout-button {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: background-color 0.3s;
+}
+
+.menu a:hover,
+.logout-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.filter-form {
+    background-color: #ffffff;
+    /* Define o fundo como branco */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil para elevação visual */
+    border-radius: 8px;
+    /* Bordas arredondadas para um visual moderno */
+    padding: 20px;
+    /* Espaçamento interno para separar o conteúdo das bordas */
+    margin: 20px auto;
+    /* Centraliza o formulário e adiciona margem vertical */
+    width: 80%;
+    /* Define uma largura para o formulário */
+    max-width: 960px;
+    /* Uma largura máxima para manter a legibilidade em telas grandes */
+}
+
+.dados-table {
+    width: 100%;
+    /* Ajuste para que a tabela use toda a largura do container */
+    background-color: #fff;
+    /* Fundo branco para a tabela */
+    margin: 20px auto;
+    /* Espaçamento e centralização */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra para elevação visual */
+    border-collapse: collapse;
+    /* Remove espaços entre as células */
+}
+
+.dados-table th,
+.dados-table td {
+    padding: 12px;
+    /* Padding para espaço interno nas células */
+    border: 1px solid #ddd;
+    /* Borda sutil para definição das células */
+}
+
+/* Estilos para melhorar a acessibilidade e visibilidade */
+.dados-table th {
+    background-color: #f8f8f8;
+    /* Um fundo mais escuro para cabeçalhos */
+}
+
+.dados-table tbody tr:hover {
+    background-color: #f0f0f0;
+    /* Efeito hover para linhas da tabela */
+}
+
+
+
+.register-form {
+    color: rgb(0, 0, 0);
+    /* Keeps text color white for contrast */
+    font-size: 10px;
+    /* Larger text size for better readability */
+    background-color: #10A310;
+    /* Dark background for better contrast */
+    padding: 20px;
+    /* Adds padding to make text more spacious */
+}
+
+
+
+/* Estilos para o background */
+#background {
+    background-image: url('/static/images/backgroundimage.png');
+    background-size: cover;
+    background-position: center;
+    /* Centraliza a imagem de fundo */
+    height: 500px;
+    /* Ajuste para a altura desejada ou '100vh' para altura total da tela */
+}
+
+/* Estilos para os formulários de filtro */
+
+
+.filter-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.filter-button {
+    padding: 10px 15px;
+    background-color: #0e7a0d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.filter-button:hover {
+    background-color: #0a5c0a;
+}
+
+.welcome-header {
+    padding: 10px 25px;
+    text-align: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.info-section {
+    background-color: #f4f4f4;
+    /* Cor de fundo suave para melhor legibilidade */
+    padding: 40px 20px;
+}
+
+.features article {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: white;
+    /* Fundo branco para cada feature para destacá-las */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid black;
+    border-radius: 12px;
+}
+
+.features h3 {
+    color: #10A310;
+    /* Cor temática para títulos */
+}

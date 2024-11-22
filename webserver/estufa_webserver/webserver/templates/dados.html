@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('input[type="date"]').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="filter-form">
+    <form method="get" action="">
+        <div class="filter-fields">
+            {% for field in leituras_filter.form %}
+            {% if not field.name in "planta" or user.is_authenticated and user.admin %}
+            <div class="filter-field">
+                {{ field.label_tag }} {{ field }}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <button type="submit">Filtrar</button>
+    </form>
+</div>
+
+<table class="dados-table">
+    <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Temperatura</th>
+            <th>Humidade</th>
+            <th>Luz</th>
+            <th>Humidade do Solo</th>
+            <th>Profundidade</th>
+            <th>Planta</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for leitura in leituras_filter.qs %}
+        <tr>
+            <td>{{ leitura.timestamp }}</td>
+            <td>{{ leitura.temperatura }}</td>
+            <td>{{ leitura.humidade }}</td>
+            <td>{{ leitura.luz }}</td>
+            <td>{{ leitura.humidade_solo }}</td>
+            <td>{{ leitura.profundidade }}</td>
+            <td>{{ leitura.planta }}</td>
+            <td>{{ leitura.Time }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">Nenhuma leitura encontrada.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

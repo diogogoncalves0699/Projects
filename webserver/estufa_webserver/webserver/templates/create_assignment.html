@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Estilo para o container principal onde o formulário será colocado */
+    .form-container {
+        max-width: 500px;
+        /* Largura máxima para o formulário */
+        margin: 40px auto;
+        /* Centraliza o formulário na página */
+        padding: 20px;
+        /* Espaço interno para o formulário */
+        background-color: #f8f8f8;
+        /* Cor de fundo do formulário */
+        border-radius: 8px;
+        /* Bordas arredondadas */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Sombra suave para dar profundidade */
+    }
+
+    /* Estilo para o título do formulário */
+    h2 {
+        text-align: center;
+        /* Centraliza o título */
+        color: #333;
+        /* Cor escura para o texto do título */
+    }
+
+    /* Estilo para o formulário */
+    form {
+        display: flex;
+        flex-direction: column;
+        /* Organiza os campos do formulário em coluna */
+    }
+
+    /* Estilo para os campos do formulário */
+    form label {
+        margin-top: 10px;
+        /* Espaço acima de cada label */
+        margin-bottom: 5px;
+        /* Espaço abaixo de cada label */
+        font-size: 16px;
+        /* Tamanho da fonte para os labels */
+        color: #666;
+        /* Cor do texto para os labels */
+    }
+
+    /* Estilo para os inputs do formulário */
+    input[type="text"],
+    input[type="password"],
+    select {
+        padding: 10px;
+        /* Padding dentro dos inputs */
+        margin-bottom: 15px;
+        /* Espaço abaixo dos inputs */
+        border: 1px solid #ccc;
+        /* Borda sutil para os inputs */
+        border-radius: 4px;
+        /* Bordas arredondadas para os inputs */
+        width: calc(100% - 22px);
+        /* Largura total ajustada para padding e bordas */
+    }
+
+    /* Estilo para o botão de submit */
+    button {
+        padding: 10px 15px;
+        /* Padding para o botão */
+        background-color: #004d40;
+        /* Cor de fundo verde para o botão */
+        color: white;
+        /* Texto branco para o botão */
+        border: none;
+        /* Sem borda para o botão */
+        border-radius: 4px;
+        /* Bordas arredondadas para o botão */
+        cursor: pointer;
+        /* Cursor de ponteiro para indicar ação */
+        font-size: 16px;
+        /* Tamanho da fonte do botão */
+        margin-top: 10px;
+        /* Espaço acima do botão */
+    }
+
+    button:hover {
+        background-color: #4cae4c;
+        /* Cor mais escura no hover para o botão */
+    }
+</style>
+
+<div class="form-container">
+    <h2>Atribuir Sistema a Utilizador</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar Atribuição</button>
+    </form>
+</div>
+{% endblock %}

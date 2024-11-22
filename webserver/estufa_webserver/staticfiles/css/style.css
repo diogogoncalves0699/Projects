@@ -1,0 +1,55 @@
+#background {
+    background-image: url('/static/images/backgroundimage.png');
+    background-size: cover;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    /* Isso vai centralizar todos os filhos do header verticalmente */
+    justify-content: space-between;
+    /* Isso vai colocar o espaço entre o logo e o título */
+}
+
+#logo {
+    max-width: 100px;
+    /* Ou qualquer outro tamanho que você desejar */
+    display: inline-block;
+    /* Muda o display para block para permitir margin automática */
+    margin: 0 auto;
+    /* Margem automática nas laterais para centralizar */
+}
+
+
+
+.title {
+    margin: auto;
+    background-color: rgb(16, 163, 16);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: x-large;
+    width: 100%;
+    text-align: left;
+    position: absolute;
+    padding: 20px;
+    /* Ajuste do padding para menor intrusão */
+    top: 0px;
+    cursor: pointer;
+    left: 0px;
+    right: 5px;
+    color: white;
+}
+
+.menu {
+    display: inline;
+    z-index: 2;
+    position: relative;
+    text-align: right;
+    right: 20px;
+    top: -50px;
+    /* Ajuste conforme necessário para evitar sobreposição */
+    word-spacing: 20px;
+}
+
+#rodape {
+    text-align: center;
+}

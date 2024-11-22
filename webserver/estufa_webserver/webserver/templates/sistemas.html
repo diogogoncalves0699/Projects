@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .table-container {
+        width: 90%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+    tr:hover {
+        background-color: #f9f9f9;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .link-button {
+        padding: 5px 10px;
+        text-decoration: none;
+        color: white;
+        background-color: #004d40;
+        border-radius: 5px;
+    }
+
+    .link-button:hover {
+        background-color: #0056b3;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .avisos-container {
+        margin-top: 20px;
+    }
+
+    .avisos-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .avisos-table th,
+    .avisos-table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .avisos-table th {
+        background-color: #ffdddd;
+        color: #d32f2f;
+    }
+
+    .avisos-table td {
+        background-color: #ffecec;
+    }
+</style>
+
+<h1></h1>
+{% if user.is_authenticated and user.admin %}
+<div class="add-system-link" style="text-align: center; margin-bottom: 20px;">
+    <a href="{% url 'adicionar_sistema' %}" class="link-button"
+        style="background-color: #004d40; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Adicionar
+        Novo Sistema</a>
+</div>
+{% endif %}
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Planta</th>
+                <th>DHT</th>
+                <th>Luz</th>
+                <th>Humidade do Solo</th>
+                <th>Profundidade</th>
+                <th>Tempo Amostra</th>
+                <th>Dados Atuais</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sistema in sistemas %}
+            <tr>
+                <td>{{ sistema.nome_planta }}</td>
+                <td>{{ sistema.sensor_dht|yesno:"Sim,Não" }}</td>
+                <td>{{ sistema.sensor_bh1750|yesno:"Sim,Não" }}</td>
+                <td>{{ sistema.sensor_humidade_solo|yesno:"Sim,Não" }}</td>
+                <td>{{ sistema.sensor_profundidade|yesno:"Sim,Não" }}</td>
+                <td>{{ sistema.temp_a }}s</td>
+                <td>
+                    {% if sistema.ultima_leitura %}
+                    Temperatura: {{ sistema.ultima_leitura.temperatura }}°C,
+                    Humidade: {{ sistema.ultima_leitura.humidade }}%,
+                    Luz: {{ sistema.ultima_leitura.luz }} lux,
+                    Hum. Solo: {{ sistema.ultima_leitura.humidade_solo }}%,
+                    Medidor De Agua: {{ sistema.ultima_leitura.profundidade }} cm
+                    {% else %}
+                    Nenhum dado recente disponível.
+                    {% endif %}
+                </td>
+                <td class="action-buttons">
+                    {% if user.is_authenticated and user.admin %}
+                    <a href="{% url 'apagar_sistema' id=sistema.id %}" class="link-button"
+                        style="background-color: #004d40;">Apagar</a>
+                    {% endif %}
+                    <a href="{% url 'editar_sistema' id=sistema.id %}" class="link-button">Editar</a>
+                    <a href="{% url 'dados-graficos' nome_planta=sistema.nome_planta %}" class="link-button"
+                        style="background-color: #004d40;">Ver Gráficos</a>
+                    <a href="{% url 'ver_dados' nome_planta=sistema.nome_planta %}" class="link-button"
+                        style="background-color: #004d40;">Visualizar Dados</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">Nenhum sistema simulado existente.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="avisos-container">
+    <table class="avisos-table">
+        <thead>
+            <tr>
+                <th>Planta</th>
+                <th>Aviso</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nome_planta, avisos_lista in avisos.items %}
+            {% if avisos_lista %}
+            {% for aviso in avisos_lista %}
+            <tr>
+                <td>{{ nome_planta }}</td>
+                <td>{{ aviso }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

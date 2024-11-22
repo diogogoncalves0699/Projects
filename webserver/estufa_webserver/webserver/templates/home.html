@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Cabeçalho com o Bem-vindo e fundo claro -->
+<header class="welcome-header">
+    <h2>Explore o Futuro da Agricultura</h2>
+</header>
+
+<!-- Seção principal com fundo neutro para melhor legibilidade -->
+<section class="info-section" style="background-image: url('/static/images/backgroundimage.png')">
+    <div class="features">
+        <article>
+            <h3>Monitoramento em Tempo Real</h3>
+            <p>Sensores de última geração para uma gestão precisa do ambiente de cultivo.</p>
+        </article>
+        <article>
+            <h3>Análise de Dados Avançada</h3>
+            <p>Inteligência artificial para prever e adaptar às necessidades das plantas.</p>
+        </article>
+        <article>
+            <h3>Sustentabilidade e Eficiência</h3>
+            <p>Redução significativa no uso de recursos naturais, promovendo uma agricultura sustentável.</p>
+        </article>
+    </div>
+</section>
+{% endblock %}

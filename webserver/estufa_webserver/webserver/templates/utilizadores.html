@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        padding: 20px;
+        width: 90%;
+        max-width: 800px;
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .utilizadores-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .utilizadores-table th,
+    .utilizadores-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .utilizadores-table th {
+        background-color: #004d40;
+        color: white;
+    }
+
+    .utilizadores-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .utilizadores-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-back,
+    .btn-success {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 5px;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #004d40;
+    }
+
+    .btn-secondary {
+        background-color: #f44336;
+    }
+
+    .btn-back {
+        background-color: #004d40;
+    }
+
+    .btn-success {
+        background-color: #004d40;
+    }
+
+    .btn:hover {
+        opacity: 0.85;
+        transform: scale(1.05);
+    }
+
+    .btn:active {
+        transform: scale(1.00);
+    }
+</style>
+
+<div class="container">
+    <h2></h2>
+    <a href="{% url 'users-with-systems' %}" class="btn btn-success" style="margin-bottom: 20px;">Ver Sistemas
+        associados</a>
+    <table class="utilizadores-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for utilizador in utilizadores %}
+            <tr>
+                <td>{{ utilizador.id }}</td>
+                <td>{{ utilizador.nome }}</td>
+                <td>{{ utilizador.email }}</td>
+                <td>{{ utilizador.admin|yesno:"Sim,Não" }}</td>
+                <td>
+                    <a href="{% url 'edit_admin' utilizador.id %}" class="btn btn-primary">Alterar Permissao</a>
+                    <a href="{% url 'delete_utilizador' utilizador.id %}" class="btn btn-secondary">Apagar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

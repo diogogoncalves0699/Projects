@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 18px;
+        color: #666;
+        line-height: 1.6;
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    p:last-child {
+        border-bottom: none;
+    }
+</style>
+
+<div class="container">
+    <h1>Dados Atuais da Planta</h1>
+    {% if ultima_leitura %}
+    <p>Temperatura: {{ ultima_leitura.temperatura }}°C</p>
+    <p>Humidade: {{ ultima_leitura.humidade }}%</p>
+    <p>Luz: {{ ultima_leitura.luz }} lux</p>
+    <p>Humidade do Solo: {{ ultima_leitura.humidade_solo }}%</p>
+    <p>Profundidade: {{ ultima_leitura.profundidade }} cm</p>
+    <p>Timestamp: {{ ultima_leitura.timestamp|date:"Y-m-d H:i:s" }}</p>
+    {% else %}
+    <p>Nenhum dado disponível para a planta selecionada.</p>
+    {% endif %}
+</div>
+{% endblock %}

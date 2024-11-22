@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .form-container {
+        max-width: 500px;
+        /* Ajuste conforme necessário para responsividade */
+        margin: 2em auto;
+        padding: 2em;
+        background-color: #f7f7f7;
+        /* Fundo mais suave que o verde anterior */
+        border: none;
+        /* Removendo borda para um visual mais limpo */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Sombra mais proeminente para efeito de profundidade */
+        text-align: left;
+        color: #333;
+        /* Melhor contraste para leitura */
+    }
+
+    h2 {
+        text-align: center;
+        color: #2c3e50;
+        /* Cor mais sofisticada e profissional */
+        margin-bottom: 1em;
+        /* Espaçamento adequado após o título */
+    }
+
+    label {
+        display: block;
+        margin-top: 1em;
+        margin-bottom: 0.5em;
+        color: #555;
+        /* Suavizando a cor do texto para conforto visual */
+        font-weight: bold;
+        /* Tornando as labels mais destacadas */
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        /* Ajuste para que padding não afete a largura definida */
+    }
+
+    button {
+        width: 100%;
+        padding: 12px 20px;
+        background-color: #004d40;
+        /* Um azul mais vibrante */
+        color: white;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        /* Suavização da transição ao passar o mouse */
+    }
+
+    button:hover {
+        background-color: #0a0a0a;
+        /* Variação mais escura ao passar o mouse */
+    }
+
+    form {
+        margin-top: 1em;
+        /* Espaçamento do topo para separar das outras partes do layout */
+    }
+</style>
+
+<div class="form-container">
+    <h2>Registo</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+</div>
+{% endblock %}

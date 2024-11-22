@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f6f6f6;
+        padding: 20px;
+    }
+
+    .filter-form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .filter-fields {
+        display: flex;
+        gap: 20px;
+    }
+
+    .filter-field {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-field label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .filter-field input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .filter-field input:focus {
+        outline: none;
+        border-color: #4CAF50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    }
+
+    .chart-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .chart-wrapper {
+        flex: 1 1 calc(50% - 40px);
+        max-width: calc(50% - 40px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        background-color: transparent;
+    }
+
+    canvas {
+        width: 100%;
+        max-width: 400px;
+        height: 200px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .filter-button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        align-self: center;
+        /* Alinha o botão com os campos */
+        margin-left: 20px;
+        /* Espaçamento entre o botão e os campos */
+    }
+
+    .filter-button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<div class="filter-form">
+    <form method="get" action="">
+        <div class="filter-fields">
+            <div class="filter-field">
+                <label for="start_date">Data de Início</label>
+                <input type="date" id="start_date" name="start_date" value="{{ request.GET.start_date }}">
+            </div>
+            <div class="filter-field">
+                <label for="end_date">Data de Fim</label>
+                <input type="date" id="end_date" name="end_date" value="{{ request.GET.end_date }}">
+            </div>
+        </div>
+        <button type="submit" class="filter-button">Filtrar</button>
+    </form>
+</div>
+
+<div class="chart-container">
+    <div class="chart-wrapper">
+        <canvas id="temperatureChart"></canvas>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="humidityChart"></canvas>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="lightChart"></canvas>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="soilMoistureChart"></canvas>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="depthChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var rawData = '{{ data|safe }}';
+        var data = JSON.parse(rawData);
+
+        // Configurando o gráfico de Temperatura
+        var ctxTemp = document.getElementById('temperatureChart').getContext('2d');
+        var temperatureChart = new Chart(ctxTemp, {
+            type: 'line',
+            data: {
+                labels: data.dates,
+                datasets: [{
+                    label: 'Temperatura',
+                    data: data.temperatura,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Configurando o gráfico de Humidade
+        var ctxHum = document.getElementById('humidityChart').getContext('2d');
+        var humidityChart = new Chart(ctxHum, {
+            type: 'line',
+            data: {
+                labels: data.dates,
+                datasets: [{
+                    label: 'Humidade',
+                    data: data.humidade,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Configurando o gráfico de Luz
+        var ctxLight = document.getElementById('lightChart').getContext('2d');
+        var lightChart = new Chart(ctxLight, {
+            type: 'line',
+            data: {
+                labels: data.dates,
+                datasets: [{
+                    label: 'Luz',
+                    data: data.luz,
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Configurando o gráfico de Humidade do Solo
+        var ctxSoil = document.getElementById('soilMoistureChart').getContext('2d');
+        var soilMoistureChart = new Chart(ctxSoil, {
+            type: 'line',
+            data: {
+                labels: data.dates,
+                datasets: [{
+                    label: 'Humidade do Solo',
+                    data: data.humidade_solo,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        // Configurando o gráfico de Profundidade
+        var ctxDepth = document.getElementById('depthChart').getContext('2d');
+        var depthChart = new Chart(ctxDepth, {
+            type: 'line',
+            data: {
+                labels: data.dates,
+                datasets: [{
+                    label: 'Profundidade',
+                    data: data.profundidade,
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+    });
+</script>
+{% endblock %}

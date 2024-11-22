@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Apagar Utilizador: {{ utilizador.nome }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>Tem a certeza de que deseja apagar o utilizador {{ utilizador.nome }}?</p>
+        <button type="submit" class="btn btn-primary">Sim</button>
+        <a href="{% url 'utilizadores' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+
+<style>
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        margin: auto;
+        text-align: center;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        text-decoration: none;
+        background-color: #004d40;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #004d40;
+    }
+
+    .btn-secondary {
+        background-color: #f44336;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
+    }
+</style>
+{% endblock %}

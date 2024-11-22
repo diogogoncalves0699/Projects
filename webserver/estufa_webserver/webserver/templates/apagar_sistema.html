@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Apagar Sistema Simulado</h1>
+<p>Tem certeza de que deseja apagar o sistema "{{ sistema.nome_planta }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar Apagar</button>
+</form>
+
+<a href="{% url 'sistemas' %}">Cancelar e voltar para a lista de sistemas</a>
+{% endblock %}
